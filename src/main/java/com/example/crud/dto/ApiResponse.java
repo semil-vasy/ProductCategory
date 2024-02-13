@@ -7,10 +7,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class ApiResponse {
 
-	private int status;
-	
-	private String message;
-	
-	private Object data;
+    private int status;
 
+    private String message;
+
+    private Object data;
+	
 }
