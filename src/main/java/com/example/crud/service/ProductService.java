@@ -8,14 +8,15 @@ public interface ProductService {
 
     List<ProductDto> getAllProduct();
 
+    List<ProductDto> getProductByCategory(long categoryId);
+
     ProductDto getProductById(long productId);
 
-    ProductDto addProduct(ProductDto productDto);
+    ProductDto addProduct(long categoryId, ProductDto productDto);
 
     ProductDto updateProduct(long productId, ProductDto productDto);
 
     void deleteProduct(long productId);
 
-//	ProductDto assignCategory(long productId, long categoryId);
 
 }

@@ -2,10 +2,10 @@ package com.example.crud.service.impl;
 
 import com.example.crud.dto.ProductDto;
 import com.example.crud.exception.ResourceNotFoundException;
+import com.example.crud.model.Category;
 import com.example.crud.model.Product;
 import com.example.crud.repository.CategoryRepository;
 import com.example.crud.repository.ProductRepository;
-import com.example.crud.service.CategoryService;
 import com.example.crud.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductDto> getProductByCategory(long categoryId) {
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(404, "No data found with Id : " + categoryId));
+        List<Product> products = this.productRepository.findByCategory(category);
+        return products.stream().map(this::productToDto).toList();
+    }
+
+    @Override
     public ProductDto getProductById(long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(404, "No data found with Id : " + productId));
@@ -39,7 +46,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto addProduct(ProductDto productDto) {
+    public ProductDto addProduct(long categoryId, ProductDto productDto) {
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(404, "No data found with Id : " + categoryId));
+        productDto.setCategory(category);
         Product product = productRepository.save(this.dtoToProduct(productDto));
         return this.productToDto(product);
     }
@@ -53,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
         product.setProductDescription(productDto.getProductDescription());
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());
-//        product.setProject(productDto.getProject());
 
         Product newProduct = productRepository.save(product);
         return this.productToDto(newProduct);

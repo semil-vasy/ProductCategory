@@ -7,20 +7,20 @@ import lombok.Data;
 @Data
 public class Product {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long productId;
 
-	private String productName;
+    private String productName;
 
-	private String productDescription;
+    private String productDescription;
 
-	private double price;
+    private double price;
 
-	private int quantity;
+    private int quantity;
 
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private Category category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

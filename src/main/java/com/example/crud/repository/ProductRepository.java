@@ -1,5 +1,6 @@
 package com.example.crud.repository;
 
+import com.example.crud.model.Category;
 import com.example.crud.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,5 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT * FROM product p ORDER BY p.product_id ASC", nativeQuery = true)
     List<Product> findAll();
+
+    List<Product> findByCategory(Category category);
 
 }

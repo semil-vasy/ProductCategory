@@ -10,36 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/product")
+@RequestMapping("api/")
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
-    @GetMapping("")
-    public ResponseEntity<List<ProductDto>> getAllStudents() {
+    @GetMapping("product")
+    public ResponseEntity<List<ProductDto>> getAllProduct() {
         return ResponseEntity.ok(productService.getAllProduct());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ProductDto> getStudentById(@PathVariable("id") long studentId) {
-        return ResponseEntity.ok(productService.getProductById(studentId));
+    @GetMapping("product/{productId}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable long productId) {
+        return ResponseEntity.ok(productService.getProductById(productId));
     }
 
-    @PostMapping("")
-    public ResponseEntity<ProductDto> addStudent(@RequestBody ProductDto studentDto) {
-        return ResponseEntity.ok(productService.addProduct(studentDto));
+    @PostMapping("category/{categoryId}/product")
+    public ResponseEntity<ProductDto> addStudent(@PathVariable long categoryId, @RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(productService.addProduct(categoryId, productDto));
     }
 
-    @PutMapping("{studentId}")
-    public ResponseEntity<ProductDto> updateStudent(@PathVariable long studentId, @RequestBody ProductDto studentDto) {
-        return ResponseEntity.ok(productService.updateProduct(studentId, studentDto));
+    @GetMapping("category/{categoryId}/product")
+    public ResponseEntity<List<ProductDto>> addStudent(@PathVariable long categoryId) {
+        return ResponseEntity.ok(productService.getProductByCategory(categoryId));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<ApiResponse> deleteStudent(@PathVariable("id") long studentId) {
-        productService.deleteProduct(studentId);
-        ApiResponse apiResponse = new ApiResponse(200, "Success", "Student Deleted Successfully");
+    @PutMapping("product/{productId}")
+    public ResponseEntity<ProductDto> updateStudent(@PathVariable long productId, @RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(productService.updateProduct(productId, productDto));
+    }
+
+    @DeleteMapping("product/{productId}")
+    public ResponseEntity<ApiResponse> deleteStudent(@PathVariable long productId) {
+        productService.deleteProduct(productId);
+        ApiResponse apiResponse = new ApiResponse(200, "Success", "Product Deleted Successfully");
         return ResponseEntity.ok(apiResponse);
     }
 

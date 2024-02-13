@@ -14,32 +14,32 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
-    @GetMapping("")
-    public ResponseEntity<List<CategoryDto>> getAllProjects() {
+    @GetMapping
+    public ResponseEntity<List<CategoryDto>> getAllCategory() {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<CategoryDto> getProjectById(@PathVariable("id") long projectId) {
-        return ResponseEntity.ok(categoryService.getCategoryById(projectId));
+    @GetMapping("{categoryId}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable long categoryId) {
+        return ResponseEntity.ok(categoryService.getCategoryById(categoryId));
     }
 
-    @PostMapping("")
-    public ResponseEntity<CategoryDto> saveProject(@RequestBody CategoryDto projectDto) {
-        return ResponseEntity.ok(categoryService.addCategory(projectDto));
+    @PostMapping
+    public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.addCategory(categoryDto));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<CategoryDto> updateProject(@PathVariable("id") long projectId, @RequestBody CategoryDto projectDto) {
-        return ResponseEntity.ok(categoryService.updateCategory(projectId, projectDto));
+    @PutMapping("{categoryId}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable long categoryId, @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryId, categoryDto));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<ApiResponse> deleteProject(@PathVariable("id") long projectId) {
-        categoryService.deleteCategory(projectId);
-        ApiResponse apiResponse = new ApiResponse(200, "Success", "Project Deleted Successfully");
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        ApiResponse apiResponse = new ApiResponse(200, "Success", "Category Deleted Successfully");
         return ResponseEntity.status(200).body(apiResponse);
     }
 }
